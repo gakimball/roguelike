@@ -1,0 +1,18 @@
+song CUTSCENE_2 plays on repeat
+
+actor rick is RICK
+actor morty is MORTY
+
+rick moves to 12,4
+rick moves right 2
+rick moves left 2 then right 4
+
+rick says "Morty, come, come to the garage, I-I gotta surprise for ya."
+
+rick asks "W-what do you think of my spaceship? I made, I made it out of things I found in the garage."
+  reply "Yeah Rick, it's great..."
+    rick says "Reply goes here."
+  reply "It's the worst biiiiitch."
+    rick says "Ricky ticky tavy biiiiitch!"
+
+player thinks "I'm a wizard, and that looks fucked up."
