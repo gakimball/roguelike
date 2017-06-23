@@ -28,24 +28,27 @@ export default class Game {
   }
 
   handleKey = (e) => {
-    e.preventDefault();
+    const tick = () => {
+      e.preventDefault();
+      this.tick();
+    };
 
     switch (e.key) {
       case 'ArrowUp':
         this.world.player.moveUp();
-        this.tick();
+        tick();
         break;
       case 'ArrowDown':
         this.world.player.moveDown();
-        this.tick();
+        tick();
         break;
       case 'ArrowLeft':
         this.world.player.moveLeft();
-        this.tick();
+        tick();
         break;
       case 'ArrowRight':
         this.world.player.moveRight();
-        this.tick();
+        tick();
         break;
       default:
     }
