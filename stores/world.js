@@ -1,6 +1,7 @@
 import { action, observable } from 'mobx';
 import createMap from '../util/create-map';
-import { Player } from '../entities';
+import Entity from '../entities/entity';
+import entities from '../entities/list';
 
 export default class WorldStore {
   map = createMap()
@@ -9,13 +10,17 @@ export default class WorldStore {
 
   player = null
 
-  addEntity(Entity, x, y) {
-    const e = new Entity(this);
-    e.place(x, y);
-    this.entities.push(e);
+  addEntity(type, x, y) {
+    const entity = entities[type];
 
-    if (e instanceof Player) {
-      this.player = e;
+    if (entity) {
+      const e = new Entity(this, entity);
+      e.place(x, y);
+      this.entities.push(e);
+
+      if (e.player) {
+        this.player = e;
+      }
     }
   }
 }

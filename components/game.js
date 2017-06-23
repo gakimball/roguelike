@@ -3,7 +3,6 @@ import DocumentEvents from 'react-document-events';
 import rot from 'rot-js';
 import { autorun } from 'mobx';
 import WorldStore from '../stores/world';
-import { Player, Gremlin } from '../entities';
 
 export default class Game extends Component {
   world = new WorldStore()
@@ -30,8 +29,8 @@ export default class Game extends Component {
   }
 
   setupWorld() {
-    this.world.addEntity(Player, 5, 5);
-    this.world.addEntity(Gremlin, 10, 10);
+    this.world.addEntity('player', 5, 5);
+    this.world.addEntity('gremlin', 10, 10);
   }
 
   handleKey = (e) => {
@@ -68,8 +67,8 @@ export default class Game extends Component {
     });
 
     // Draw entities
-    this.world.entities.map(({ x, y, char }) => {
-      this.display.draw(x, y, char);
+    this.world.entities.map(({ x, y, character }) => {
+      this.display.draw(x, y, character);
     });
   }
 
