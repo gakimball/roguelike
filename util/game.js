@@ -1,6 +1,7 @@
 import rot from 'rot-js';
-import WorldStore from '../stores/world';
 import { autorun } from 'mobx';
+import WorldStore from '../stores/world';
+import Logger from './logger';
 
 export default class Game {
   constructor() {
@@ -12,6 +13,7 @@ export default class Game {
       fg: '#fff',
     });
     this.world = new WorldStore();
+    this.logger = new Logger();
     this.setup();
   }
 
@@ -55,6 +57,7 @@ export default class Game {
   }
 
   start() {
+    this.logger.log('Ye findeth yeself in yon dungeon.');
     this.tick();
   }
 
@@ -64,12 +67,22 @@ export default class Game {
 
     // Draw map
     this.world.map.create((x, y, wall) => {
-      this.display.draw(x, y, wall ? '#' : '.');
+      this.display.draw(x + 1, y + 1, wall ? '#' : '.');
     });
 
     // Draw entities
     this.world.entities.map(({ x, y, character }) => {
-      this.display.draw(x, y, character);
+      this.display.draw(x + 1, y + 1, character);
+    });
+
+    // Draw UI
+    this.display.drawText(26, 2, `HP  | ${this.world.player.health}`);
+    this.display.drawText(26, 3, `MP  | ${this.world.player.mana}`);
+    this.display.drawText(26, 4, `ATK | ${this.world.player.attack}`);
+
+    // Draw logs
+    this.logger.getLogs().forEach((line, index) => {
+      this.display.drawText(1, 18 + index, `> ${line}`);
     });
   }
 }
