@@ -18,13 +18,24 @@ export default class Game {
     this.cameraY = 0;
     this.cameraSize = 30;
     this.setup();
+    this.setInitialCamera();
   }
 
   // @TODO: Replace with something more declarative
   setup() {
     this.map = createIsland(presets.giant);
-    this.world.addEntity('player', 5, 5);
-    this.world.addEntity('gremlin', 10, 10);
+    this.world.addEntity('player', 100, 100);
+  }
+
+  setInitialCamera() {
+    for (let x = 0; x < (this.map.length / this.cameraSize); x++) {
+      for (let y = 0; y < (this.map[0].length / this.cameraSize); y++) {
+        if (this.entityVisible(this.world.player, x, y)) {
+          this.cameraX = x;
+          this.cameraY = y;
+        }
+      }
+    }
   }
 
   getCanvas() {
@@ -65,10 +76,10 @@ export default class Game {
     this.tick();
   }
 
-  entityVisible(entity) {
-    const lowerX = this.cameraX * this.cameraSize;
+  entityVisible(entity, xOffset = this.cameraX, yOffset = this.cameraY) {
+    const lowerX = xOffset * this.cameraSize;
     const upperX = lowerX + this.cameraSize;
-    const lowerY = this.cameraY * this.cameraSize;
+    const lowerY = yOffset * this.cameraSize;
     const upperY = lowerY + this.cameraSize;
 
     return (
