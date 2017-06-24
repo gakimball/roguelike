@@ -2,7 +2,7 @@ import rot from 'rot-js';
 import { autorun } from 'mobx';
 import WorldStore from '../stores/world';
 import Logger from './logger';
-import { presets, createIsland } from './create-island';
+import { presets } from './create-island';
 
 export default class Game {
   constructor() {
@@ -12,7 +12,7 @@ export default class Game {
       fontSize: 16,
       forceSquareRatio: true
     });
-    this.world = new WorldStore();
+    this.world = new WorldStore(this, presets.giant);
     this.logger = new Logger();
     this.cameraX = 0;
     this.cameraY = 0;
@@ -23,18 +23,53 @@ export default class Game {
 
   // @TODO: Replace with something more declarative
   setup() {
-    this.map = createIsland(presets.giant);
     this.world.addEntity('player', 100, 100);
   }
 
   setInitialCamera() {
-    for (let x = 0; x < (this.map.length / this.cameraSize); x++) {
-      for (let y = 0; y < (this.map[0].length / this.cameraSize); y++) {
+    for (let x = 0; x < (this.world.map.length / this.cameraSize); x++) {
+      for (let y = 0; y < (this.world.map[0].length / this.cameraSize); y++) {
         if (this.entityVisible(this.world.player, x, y)) {
           this.cameraX = x;
           this.cameraY = y;
         }
       }
+    }
+  }
+
+  shiftCamera(dir) {
+    switch (dir) {
+      case 'up': {
+        const nextY = this.cameraY - 1;
+        if (nextY >= 0) {
+          this.cameraY = nextY;
+        }
+        break;
+      }
+      case 'down': {
+        const nextY = this.cameraY + 1;
+        const maxY = this.world.map.length / this.cameraSize;
+        if (nextY < maxY) {
+          this.cameraY = nextY;
+        }
+        break;
+      }
+      case 'left': {
+        const nextX = this.cameraX - 1;
+        if (nextX >= 0) {
+          this.cameraX = nextX;
+        }
+        break;
+      }
+      case 'right': {
+        const nextX = this.cameraX + 1;
+        const maxX = this.world.map[0].length / this.cameraSize;
+        if (nextX < maxX) {
+          this.cameraX = nextX;
+        }
+        break;
+      }
+      default:
     }
   }
 
@@ -92,12 +127,15 @@ export default class Game {
     // Run entity AI
     this.world.entities.forEach(entity => entity.living && entity.tick());
 
+    // Check for out of bounds
+    this.shiftCamera(this.world.player.outOfBounds());
+
     // Draw map
     for (let y = 0; y < this.cameraSize; y++) {
       for (let x = 0; x < this.cameraSize; x++) {
         const mapX = this.cameraX * this.cameraSize + x;
         const mapY = this.cameraY * this.cameraSize + y;
-        this.display.draw(x, y, '', '', this.map[mapY][mapX]);
+        this.display.draw(x, y, '', '', this.world.map[mapY][mapX]);
       }
     }
 
@@ -106,7 +144,7 @@ export default class Game {
       if (this.entityVisible(entity)) {
         const baseX = this.cameraX * this.cameraSize;
         const baseY = this.cameraY * this.cameraSize;
-        this.display.draw(entity.x - baseX, entity.y - baseY, entity.character, '#000', this.map[entity.y][entity.x]);
+        this.display.draw(entity.x - baseX, entity.y - baseY, entity.character, '#000', this.world.map[entity.y][entity.x]);
       }
     });
 

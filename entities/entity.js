@@ -1,12 +1,13 @@
 import { assign, mixin, fromPairs } from 'lodash';
 import ai from '../util/ai';
+import { tiles } from '../util/create-island';
 
 export default class Entity {
   x = null
   y = null
 
-  constructor(world, props) {
-    this.world = world;
+  constructor(game, props) {
+    this.game = game;
     assign(this, props, fromPairs(props.flags.map(f => [f, true])));
     delete this.flags;
 
@@ -61,20 +62,31 @@ export default class Entity {
   }
 
   freeSpace(nextX, nextY) {
-    let free = true;
+    const tile = this.game.world.map[nextY][nextX];
 
-    this.world.map.create((x, y, wall) => {
-      if (x === nextX && y === nextY && wall) {
-        free = false;
-      }
-    });
+    return [tiles.water, tiles.lowMountain, tiles.highMountain].indexOf(tile) === -1;
+  }
 
-    this.world.entities.map(({ x, y }) => {
-      if (x === nextX && y === nextY) {
-        free = false;
-      }
-    });
+  outOfBounds() {
+    const cameraX = this.game.cameraX * this.game.cameraSize;
+    const cameraY = this.game.cameraY * this.game.cameraSize;
 
-    return free;
+    if (this.x < cameraX) {
+      return 'left';
+    }
+
+    if (this.x >= cameraX + this.game.cameraSize) {
+      return 'right';
+    }
+
+    if (this.y < cameraY) {
+      return 'up';
+    }
+
+    if (this.y >= cameraY + this.game.cameraSize) {
+      return 'down';
+    }
+
+    return false;
   }
 }
