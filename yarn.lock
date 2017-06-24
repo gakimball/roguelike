@@ -1959,6 +1959,10 @@ locate-path@^2.0.0:
     p-locate "^2.0.0"
     path-exists "^3.0.0"
 
+lodash.clamp@^4.0.3:
+  version "4.0.3"
+  resolved "https://registry.yarnpkg.com/lodash.clamp/-/lodash.clamp-4.0.3.tgz#5c24bedeeeef0753560dc2b4cb4671f90a6ddfaa"
+
 lodash@^4.14.0, lodash@^4.17.4, lodash@^4.2.0, lodash@^4.5.1, lodash@^4.6.1:
   version "4.17.4"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.4.tgz#78203a4d1c328ae1d86dca6460e369b57f4055ae"
@@ -2761,6 +2765,12 @@ rot-js@^0.6.2:
 safe-buffer@^5.0.1, safe-buffer@^5.1.0, safe-buffer@~5.1.0:
   version "5.1.1"
   resolved "https://registry.yarnpkg.com/safe-buffer/-/safe-buffer-5.1.1.tgz#893312af69b2123def71f57889001671eeb2c853"
+
+scale-value@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/scale-value/-/scale-value-1.0.0.tgz#73c18c6a590cb20a04181dbda3cbcad339be4a6c"
+  dependencies:
+    lodash.clamp "^4.0.3"
 
 "semver@2 || 3 || 4 || 5", semver@^5.3.0:
   version "5.3.0"
