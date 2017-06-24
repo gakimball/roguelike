@@ -24,14 +24,14 @@ const presets = {
     // Lower numbers prevent the islands from touching the edge of the map
     radialIntensity: 65,
   },
+  tiny: {
+    worldSize: 30,
+    noiseDensity: 13,
+    radialIntensity: 15,
+  },
   giant: {
-    // Width and height of world
     worldSize: 300,
-    // Density of noise sampled for map
-    // Higher numbers create simpler terrain
     noiseDensity: 30,
-    // Intensity of radial gradient that overlaps noise
-    // Lower numbers prevent the islands from touching the edge of the map
     radialIntensity: 150,
   },
 };

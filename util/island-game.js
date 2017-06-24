@@ -12,7 +12,7 @@ export default class Game {
       fontSize: 16,
       forceSquareRatio: true
     });
-    this.world = new WorldStore(this, presets.giant);
+    this.world = new WorldStore(this, presets.tiny);
     this.logger = new Logger();
     this.cameraX = 0;
     this.cameraY = 0;
@@ -23,7 +23,9 @@ export default class Game {
 
   // @TODO: Replace with something more declarative
   setup() {
-    this.world.addEntity('player', 100, 100);
+    const centerX = Math.floor(this.world.map[0].length / 2);
+    const centerY = Math.floor(this.world.map.length / 2);
+    this.world.addEntity('player', centerX, centerY);
   }
 
   setInitialCamera() {
