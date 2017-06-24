@@ -3,9 +3,17 @@ import rot from 'rot-js';
 import scaleValue from 'scale-value';
 
 const scale = scaleValue(-1, 1, 0, 1);
+
+// Width and height of world
 const worldSize = 100;
+
+// Density of noise sampled for map
+// Higher numbers create simpler terrain
 const noiseDensity = 23;
-const radialIntensity = 80;
+
+// Intensity of radial gradient that overlaps noise
+// Lower numbers prevent the islands from touching the edge of the map
+const radialIntensity = 65;
 
 export default class Island extends Component {
   componentDidMount() {
@@ -31,11 +39,11 @@ export default class Island extends Component {
         const val = scale(noise.get(x / noiseDensity, y / noiseDensity)) - distanceToCenter;
         let color;
 
-        if (val < 0.15) {
+        if (val < 0.05) {
           color = 'rgb(84, 185, 235)'; // Water
-        } else if (val < 0.25) {
+        } else if (val < 0.175) {
           color = 'rgb(212, 186, 95)'; // Beach
-        } else if (val < 0.45) {
+        } else if (val < 0.5) {
           color = 'rgb(93, 194, 100)'; // Low grass
         } else if (val < 0.7) {
           color = 'rgb(80, 170, 86)'; // High grass
