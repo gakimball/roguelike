@@ -16,13 +16,23 @@ const tiles = {
 const presets = {
   default: {
     // Width and height of world
-    worldSize: 100,
+    worldSize: 150,
     // Density of noise sampled for map
     // Higher numbers create simpler terrain
     noiseDensity: 23,
     // Intensity of radial gradient that overlaps noise
     // Lower numbers prevent the islands from touching the edge of the map
     radialIntensity: 65,
+  },
+  giant: {
+    // Width and height of world
+    worldSize: 300,
+    // Density of noise sampled for map
+    // Higher numbers create simpler terrain
+    noiseDensity: 30,
+    // Intensity of radial gradient that overlaps noise
+    // Lower numbers prevent the islands from touching the edge of the map
+    radialIntensity: 150,
   },
 };
 

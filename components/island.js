@@ -1,32 +1,28 @@
 import React, { Component } from 'react';
+import DocumentEvents from 'react-document-events';
 import rot from 'rot-js';
 import { createIsland, tiles, presets } from '../util/create-island';
+import Game from '../util/island-game';
 
 export default class Island extends Component {
-  componentDidMount() {
-    this.display = new rot.Display({
-      width: presets.default.worldSize,
-      height: presets.default.worldSize,
-      fontSize: 8,
-      forceSquareRatio: true
-    });
-    this.container.appendChild(this.display.getContainer());
-    this.generate();
+  state = {
+    game: null
   }
 
-  generate = () => {
-    const map = createIsland(presets.default);
+  componentDidMount() {
+    const game = new Game();
+    game.start();
+    this.container.appendChild(game.getCanvas());
 
-    for (let y = 0; y < presets.default.worldSize; y++) {
-      for (let x = 0; x < presets.default.worldSize; x++) {
-        this.display.draw(x, y, '', '#fff', map[y][x]);
-      }
-    }
+    this.setState({ game });
   }
 
   render() {
+    const { game } = this.state;
+
     return (
       <div ref={e => { this.container = e; }}>
+        {game && <DocumentEvents onKeyDown={game.handleKey} />}
         <button onClick={this.generate}>Generate</button>
       </div>
     )
