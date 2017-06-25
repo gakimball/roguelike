@@ -1,0 +1,102 @@
+Fighter
+  Weapon Master
+    Increases damage from weapon attacks.
+  Bloodthirst
+    Spend HP to increase damage of next few attacks.
+  Armor Master
+    Increase the benefits of armor.
+
+Monk
+  Unarmed Master
+    Increases damage when attacking without a weapon.
+  Meditate
+    Recover HP in a vulnerable state.
+  Palm of Fury
+    Attack an enemy and push it back.
+
+Thief
+  Pickpocket
+    Steal an item or money from another character.
+  Stealth
+    Become invisible until you take an action.
+  Throw Weapon
+    Throw your equipped weapon.
+
+Archer
+  Bow Mastery
+    Increases damage from weapon attacks.
+  Forage
+    Look for consumable berries.
+  Trap
+    Create a trap that will render an enemy immobile.
+
+Druid
+  Wild Growth
+    Heal yourself or another character.
+  Summon Animal
+    Summon an animal companion.
+  Befriend Animal
+    Befriend a hostile animal.
+
+Elementalist
+  Fireball
+    Hurl a ball of flame at an enemy.
+  Freeze
+    Freeze a character, or water.
+  Levitate
+    Glide over mountains or water.
+
+Time Mage
+  Hasten
+    Take two actions in a row.
+  Lock
+    Freeze an enemy and prevent it from taking an action.
+  
+
+Priest
+  Smite
+    Damage an enemy. Instantly kills undead.
+  Heal
+    Heal yourself or another.
+
+Summoner
+  Summon Demon
+    Summon a random demon to your side.
+
+Necromancer
+  Blood Missile
+    Spend HP to damage an enemy.
+  Raise Dead
+    Raise a corpse to be your ally.
+  Turn Undead
+    Make a character a zombie.
+
+Alchemist
+  Potion Mastery
+    Potions are twice as effective.
+  Mixology
+    Convert berries into potions.
+
+Buccaneer
+  Sense Treasure
+    Detect buried treasure nearby.
+  Sea Legs
+    Allows you to swim.
+  Pilfer
+    Chance to steal money when attacking an enemy.
+
+|           | Adjective | Secondary |
+|-----------|-----------|-----------|
+| Fighter   | Savage
+| Monk      | Enlightened
+| Thief     | Stealthy
+| Archer    | Precise
+| Druid     | Natural
+| Mage      | Arcane
+| Priest    | Holy
+| Ncromncr  | Unholy
+| Alchemist | Chemical
+
+Tome of the Savage Thief
+  2 thief spells, 1 fighter spell
+Tome of the Stealthy
