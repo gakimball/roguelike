@@ -6,12 +6,22 @@ module.exports = {
     mana: 5,
     attack: 1,
   },
-  gremlin: {
-    character: '#',
+  wolf: {
+    name: 'wolf',
+    character: 'W',
     flags: ['living'],
     health: 2,
     mana: 0,
     attack: 1,
-    ai: 'wander',
+    level: 1,
+    ai: ['chase', 4],
+  },
+  deer: {
+    name: 'deer',
+    character: 'D',
+    flags: ['living', 'friendly'],
+    health: 2,
+    mana: 0,
+    attack: 1,
   }
 }

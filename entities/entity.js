@@ -1,4 +1,5 @@
 import { assign, mixin, fromPairs } from 'lodash';
+import rot from 'rot-js';
 import ai from '../util/ai';
 import { tiles } from '../util/create-island';
 
@@ -16,6 +17,14 @@ export default class Entity {
     } else {
       this.ai = null;
     }
+
+    if (this.player) {
+      this.level = 1;
+    }
+  }
+
+  get dead() {
+    return this.health === 0;
   }
 
   place(x, y) {
@@ -29,39 +38,33 @@ export default class Entity {
     }
   }
 
-  moveUp() {
-    const nextY = this.y - 1;
+  move(dir) {
+    let nextX = this.x;
+    let nextY = this.y;
 
-    if (this.freeSpace(this.x, nextY)) {
+    switch (dir) {
+      case 'up':
+        nextY--;
+        break;
+      case 'down':
+        nextY++;
+        break;
+      case 'left':
+        nextX--;
+        break;
+      case 'right':
+        nextX++;
+        break;
+      default:
+    }
+
+    if (this.getSpace(nextX, nextY)) {
+      this.x = nextX;
       this.y = nextY;
     }
   }
 
-  moveDown() {
-    const nextY = this.y + 1;
-
-    if (this.freeSpace(this.x, nextY)) {
-      this.y = nextY;
-    }
-  }
-
-  moveLeft() {
-    const nextX = this.x - 1;
-
-    if (this.freeSpace(nextX, this.y)) {
-      this.x = nextX;
-    }
-  }
-
-  moveRight() {
-    const nextX = this.x + 1;
-
-    if (this.freeSpace(nextX, this.y)) {
-      this.x = nextX;
-    }
-  }
-
-  freeSpace(nextX, nextY) {
+  getSpace(nextX, nextY) {
     const tile = this.game.world.map[nextY][nextX];
 
     return [tiles.water, tiles.lowMountain, tiles.highMountain].indexOf(tile) === -1;
@@ -88,5 +91,33 @@ export default class Entity {
     }
 
     return false;
+  }
+
+  attack(target) {
+    let accuracy;
+
+    if (this.player) {
+      accuracy = 0.9 + ((this.level - target.level) * 0.05);
+    } else {
+      accuracy = 0.5 + ((this.level - target.level) * 0.1);
+    }
+
+    accuracy = Math.min(1, accuracy);
+
+    if (rot.RNG.getUniform() < accuracy) {
+      const damage = this.attack - (target.defense || 0);
+      game.logger.log(`${this.player ? 'You attack' : `${this.name} attacks`} ${this.player ? 'you' : this.name} for ${damage} damage.`);
+      target.hurt(damage);
+    } else {
+      game.logger.log(`${this.player ? 'You miss' : `${this.name} misses`} ${this.player ? 'you' : this.name}.`);
+    }
+  }
+
+  hurt(damage) {
+    this.health = this.health - damage;
+
+    if (this.health <= 0) {
+      this.health = 0;
+    }
   }
 }

@@ -29,10 +29,15 @@ const presets = {
     noiseDensity: 13,
     radialIntensity: 15,
   },
-  giant: {
+  big: {
     worldSize: 300,
     noiseDensity: 30,
     radialIntensity: 150,
+  },
+  massive: {
+    worldSize: 500,
+    noiseDensity: 30,
+    radialIntensity: 250,
   },
 };
 

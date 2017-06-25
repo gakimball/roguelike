@@ -26,6 +26,7 @@ export default class Game {
     const centerX = Math.floor(this.world.map[0].length / 2);
     const centerY = Math.floor(this.world.map.length / 2);
     this.world.addEntity('player', centerX, centerY);
+    this.world.addEntity('deer', centerX + 1, centerY + 1);
   }
 
   setInitialCamera() {
@@ -89,19 +90,19 @@ export default class Game {
 
     switch (e.key) {
       case 'ArrowUp':
-        this.world.player.moveUp();
+        this.world.player.move('up');
         tick();
         break;
       case 'ArrowDown':
-        this.world.player.moveDown();
+        this.world.player.move('down');
         tick();
         break;
       case 'ArrowLeft':
-        this.world.player.moveLeft();
+        this.world.player.move('left');
         tick();
         break;
       case 'ArrowRight':
-        this.world.player.moveRight();
+        this.world.player.move('right');
         tick();
         break;
       default:
