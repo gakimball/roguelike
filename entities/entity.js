@@ -17,10 +17,6 @@ export default class Entity {
     } else {
       this.ai = null;
     }
-
-    if (this.player) {
-      this.level = 1;
-    }
   }
 
   get dead() {
@@ -58,7 +54,13 @@ export default class Entity {
       default:
     }
 
-    if (this.getSpace(nextX, nextY)) {
+    const target = this.getSpace(nextX, nextY);
+
+    if (target instanceof Entity) {
+      if (this.player) {
+        this.damage(target);
+      }
+    } else if (target === true) {
       this.x = nextX;
       this.y = nextY;
     }
@@ -66,8 +68,14 @@ export default class Entity {
 
   getSpace(nextX, nextY) {
     const tile = this.game.world.map[nextY][nextX];
+    const walkable = [tiles.water, tiles.lowMountain, tiles.highMountain].indexOf(tile) === -1;
+    const entity = this.game.world.getEntityAt(nextX, nextY);
 
-    return [tiles.water, tiles.lowMountain, tiles.highMountain].indexOf(tile) === -1;
+    if (entity) {
+      return entity;
+    }
+
+    return walkable;
   }
 
   outOfBounds() {
@@ -93,8 +101,13 @@ export default class Entity {
     return false;
   }
 
-  attack(target) {
+  damage(target) {
     let accuracy;
+
+    if (target.dead) {
+      this.game.logger.log(`That ${target.name} is dead.`);
+      return;
+    }
 
     if (this.player) {
       accuracy = 0.9 + ((this.level - target.level) * 0.05);
@@ -106,10 +119,10 @@ export default class Entity {
 
     if (rot.RNG.getUniform() < accuracy) {
       const damage = this.attack - (target.defense || 0);
-      game.logger.log(`${this.player ? 'You attack' : `${this.name} attacks`} ${this.player ? 'you' : this.name} for ${damage} damage.`);
+      this.game.logger.log(`${this.player ? 'You attack' : `${this.name} attacks`} ${this.player ? target.name : 'you'} for ${damage} damage.`);
       target.hurt(damage);
     } else {
-      game.logger.log(`${this.player ? 'You miss' : `${this.name} misses`} ${this.player ? 'you' : this.name}.`);
+      this.game.logger.log(`${this.player ? 'You miss' : `${this.name} misses`} ${this.player ? target.name : 'you'}.`);
     }
   }
 

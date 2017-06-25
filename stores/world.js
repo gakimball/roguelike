@@ -1,4 +1,5 @@
 import { action, observable } from 'mobx';
+import { find } from 'lodash';
 import { presets, createIsland } from '../util/create-island';
 import Entity from '../entities/entity';
 import entities from '../entities/list';
@@ -25,5 +26,9 @@ export default class WorldStore {
         this.player = e;
       }
     }
+  }
+
+  getEntityAt(x, y) {
+    return _.find(this.entities, { x, y });
   }
 }

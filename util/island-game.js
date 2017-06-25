@@ -147,7 +147,8 @@ export default class Game {
       if (this.entityVisible(entity)) {
         const baseX = this.cameraX * this.cameraSize;
         const baseY = this.cameraY * this.cameraSize;
-        this.display.draw(entity.x - baseX, entity.y - baseY, entity.character, '#000', this.world.map[entity.y][entity.x]);
+        const color = entity.dead ? '#f00' : '#000';
+        this.display.draw(entity.x - baseX, entity.y - baseY, entity.character, color, this.world.map[entity.y][entity.x]);
       }
     });
 

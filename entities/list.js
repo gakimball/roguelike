@@ -5,6 +5,7 @@ module.exports = {
     health: 10,
     mana: 5,
     attack: 1,
+    level: 1,
   },
   wolf: {
     name: 'wolf',
@@ -23,5 +24,6 @@ module.exports = {
     health: 2,
     mana: 0,
     attack: 1,
+    level: 1,
   }
 }

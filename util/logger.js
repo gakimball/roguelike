@@ -12,5 +12,6 @@ export default class Logger {
 
   log(txt) {
     this.logs.push(txt);
+    console.log(`> ${txt}`);
   }
 }
