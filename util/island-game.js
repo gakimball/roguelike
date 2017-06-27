@@ -17,6 +17,7 @@ export default class Game {
     this.cameraX = 0;
     this.cameraY = 0;
     this.cameraSize = 30;
+    this.tickCallback = () => {};
     this.setup();
     this.setInitialCamera();
   }
@@ -152,6 +153,8 @@ export default class Game {
       }
     });
 
+    this.tickCallback();
+
     // Draw UI
     // this.display.drawText(26, 2, `HP  | ${this.world.player.health}`);
     // this.display.drawText(26, 3, `MP  | ${this.world.player.mana}`);
@@ -161,5 +164,9 @@ export default class Game {
     // this.logger.getLogs().forEach((line, index) => {
     //   this.display.drawText(1, 18 + index, `> ${line}`);
     // });
+  }
+
+  onTick(fn) {
+    this.tickCallback = fn;
   }
 }

@@ -15,15 +15,23 @@ export default class Island extends Component {
     this.container.appendChild(game.getCanvas());
 
     this.setState({ game });
+    game.onTick(() => {
+      this.setState({ game });
+    });
   }
 
   render() {
     const { game } = this.state;
 
     return (
-      <div ref={e => { this.container = e; }}>
+      <div>
         {game && <DocumentEvents onKeyDown={game.handleKey} />}
-        <button onClick={this.generate}>Generate</button>
+        <div ref={e => { this.container = e; }}></div>
+        {game && <div>
+          <p><strong>Level:</strong> {game.world.player.level}</p>
+          <p><strong>HP:</strong> {game.world.player.health}</p>
+          <p><strong>MP:</strong> {game.world.player.mana}</p>
+        </div>}
       </div>
     )
   }
